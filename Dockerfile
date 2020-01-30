@@ -45,9 +45,7 @@ EXPOSE 80 443
 # RUN user drupal -u 2000 -G root \
 RUN usermod -d /root -u 2000 -a -G root bitnami \
 && chown -R 2000:0 /app-entrypoint.sh /opt /root /usr \
-&& chmod -R u+x /app-entrypoint.sh /root /opt /usr
+&& chmod -R g+rwx /app-entrypoint.sh /root /opt /usr
+##&& chmod -R u+x /app-entrypoint.sh /root /opt /usr
  
-USER 2000
-
-ENTRYPOINT [ "/app-entrypoint.sh" ]
-CMD [ "nami", "start", "--foreground", "apache" ]
+##USER 2000
