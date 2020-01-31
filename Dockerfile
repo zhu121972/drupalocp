@@ -41,7 +41,6 @@ ENV ALLOW_EMPTY_PASSWORD="no" \
     MYSQL_CLIENT_CREATE_DATABASE_USER=""
 RUN sed -i "s/80/8080/g" /opt/bitnami/apache/conf/httpd.conf && \
     sed -i "s/80/8080/g" /opt/bitnami/apache/conf/bitnami/bitnami.conf && \
-    sed -i "s/80/8080/g" /opt/bitnami/apache/conf/vhosts/httpd-vhosts.conf && \
     sed -i "s/443/8443/g" /opt/bitnami/apache/conf/bitnami/bitnami-ssl.conf
 	
 EXPOSE 8080 8443
