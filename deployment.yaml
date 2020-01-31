@@ -1,0 +1,85 @@
+---
+# Source: drupal/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drupal-openshift
+  labels:
+    app: drupal-openshift
+    chart: drupal-6.2.2
+    release: "RELEASE-NAME"
+    heritage: "Helm"
+spec:
+  selector:
+    matchLabels:
+      app: drupal-openshift
+      release: "RELEASE-NAME"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: drupal-openshift
+        chart: drupal-6.2.2
+        release: "RELEASE-NAME"
+    spec:      
+      hostAliases:
+      - ip: "127.0.0.1"
+        hostnames:
+        - "status.localhost"
+      containers:
+      - name: drupal
+        image: docker-registry.default.svc:5000/drupal/drupal
+        imagePullPolicy: "IfNotPresent"
+        env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: "yes"
+        - name: MARIADB_HOST
+          value: mariadb.drupal.svc
+        - name: MARIADB_PORT_NUMBER
+          value: "3306"
+        - name: DRUPAL_DATABASE_NAME
+          value: "sampledb"
+        - name: DRUPAL_DATABASE_USER
+          value: "drupal"
+        - name: DRUPAL_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: drupal-openshift
+              key: drupal-password
+        - name: DRUPAL_PROFILE
+          value: "standard"
+        - name: DRUPAL_USERNAME
+          value: "drupal"
+        - name: DRUPAL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: drupal-openshift
+              key: drupal-password
+        - name: DRUPAL_EMAIL
+          value: "user@example.com"
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: https
+          containerPort: 8443
+        livenessProbe:
+          httpGet:
+            path: /user/login
+            port: http
+          initialDelaySeconds: 150
+        readinessProbe:
+          httpGet:
+            path: /user/login
+            port: http
+          initialDelaySeconds: 150
+        resources:
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        volumeMounts:
+        - name: drupal-data
+          mountPath: /bitnami/drupal
+      volumes:
+      - name: drupal-data
+        persistentVolumeClaim:
+          claimName: drupal-openshift-drupal
