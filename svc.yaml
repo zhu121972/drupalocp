@@ -1,0 +1,23 @@
+---
+# Source: drupal/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: drupal-openshift
+  labels:
+    app: drupal-openshift
+    chart: drupal-6.2.2
+    release: "RELEASE-NAME"
+    heritage: "Helm"
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: "Cluster"
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https
+  selector:
+    app: drupal-openshift
