@@ -44,15 +44,17 @@ RUN sed -i "s/80/8080/g" /opt/bitnami/apache/conf/httpd.conf && \
     sed -i "s/443/8443/g" /opt/bitnami/apache/conf/bitnami/bitnami-ssl.conf
 	
 EXPOSE 8080 8443
+
 # Create user, chown, and chmod
 # RUN user drupal -u 2000 -G root \
 RUN cp -r /root/.nami / && chmod -R g+rwx /.nami
 RUN usermod -d /root -u 2000 -a -G root bitnami \
 && chown -R 2000:0 /app-entrypoint.sh /opt /root /usr \
-&& chmod -R g+rwx /app-entrypoint.sh /root /opt /usr  \
+&& chmod -R g+rwx /app-entrypoint.sh /root /opt /usr  
 ##&& cp -r /root/.nami / && chmod -R g+rwx /.nami \
 ##&& chmod -R u+x /app-entrypoint.sh /root /opt /usr
  
 ##USER 2000
+
 ENTRYPOINT [ "/app-entrypoint.sh" ]
 CMD [ "nami", "start", "--foreground", "apache" ]
