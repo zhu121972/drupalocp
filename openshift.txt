@@ -1,0 +1,49 @@
+D:
+cd D:\openshift
+https://docs.openshift.com/enterprise/3.0/cli_reference/get_started_cli.html
+http://esign.svw-volkswagen.com/
+
+
+oc rollout deplyment tiller
+helm init -i 990
+oc process -f https://github.com/openshift/origin/raw/master/examples/helm/tiller-template.yaml -p TILLER_NAMESPACE="$tiller" -p HELM_VERSION=v3.0.2 | perl -i -ne \ 's#gcr.io/kubernetes-helm#registry.cn-hangzhou.aliyuncs.com/google_containers#g;print'  | oc create -f -
+
+oc process -f https://github.com/openshift/origin/raw/master/examples/helm/tiller-template.yaml -p TILLER_NAMESPACE="tiller" -p HELM_VERSION=v3.0.2 | perl -i -ne 's#gcr.io/kubernetes-helm#registry.cn-hangzhou.aliyuncs.com/google_containers#g;print'  | oc create -f -
+helm template D:\github\charts-master\upstreamed\drupal -f D:\github\charts-master\upstreamed\drupal\setup.yaml --output-dir D:\github\charts-master\template
+$ oc import-image bitnami/drupal --reference-policy='local' --from=docker.io/bitnami/drupal:8.8.1-debian-9-r20 --confirm
+$ oc import-image bitnami/drupal --reference-policy='local' --from=docker.io/bitnami/drupal:8.5.3-rhel-7  --confirm
+error: the tag "latest" points to "docker.io/bitnami/drupal:8.8.1-debian-9-r20" - use the 'tag' command if you want to change the source to "docker.io/bitnami/drupal:8.5.3-rhel-7"
+oc import-image bitnami/drupal --from=docker.io/bitnami/drupal:8.7.10  --confirm
+sudo docker cp 0576c9710655:/ /home/drupalcontainerfiles
+export TINI_SUBREAPER= subreaper
+export
+sudo docker build -t bitnami/drupal:v1 .
+export 
+sudo docker rm $(sudo docker ps --all -q -f status=exited)
+sudo docker run -itd bitnami/drupal:v5 /bin/bash
+sudo docker build -t bitnami/drupal:v5 .
+sudo docker run -i  -e DRUPAL_DATABASE_PASSWORD=yes --name drupal5 -d bitnami/drupal:v1
+
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+oc import-image bitnami/drupal --reference-policy='local' --from=docker.io/zhu121972/bitnami:ocp --confirm
+zhu121972/bitnami:ocp
+docker login -u="zhu121972" -p="X1nWcfWBfGohcm/qknpnX6o1h7u1vs33F6CteWVhtuG3ggyonQwLKQLOpI2zOLFI" quay.io
+docker login https://index.docker.io/v1/
+sudo docker tag bitnami/drupal:ocpwithoutentry 18.139.61.224:5000/bitnami:ocpwithoutentry
+oc import-image bitnami/drupal --reference-policy='local' --from=quay.io/zhu121972/bitnami:ocpwithoutentry --confirm
+sudo docker run -itd bitnami/drupal:v1 /bin/bash
+su --shell=/bin/bash zhu1
+docker pull quay.io/zhu121972/bitnami
+oc import-image bitnami/drupal --reference-policy='local' --from=quay.io/zhu121972/bitnami:ocpwithoutentry --confirm
+oc import-image bitnami/drupal --reference-policy='local' --from=quay.io/zhu121972/bitnami --confirm
+sudo docker cp drupal3/ /home/drupalcontainerfiles1
+sudo docker cp bitnami/drupal:test/ /home/drupalcontainerfiles2
+sed -i "s/80/8080/g" /opt/bitnami/apache/conf/httpd.conf
+sed -i "s/80/8080/g" /opt/bitnami/apache/conf/vhosts/drupal-vhost.conf
+sed -i "s/80/8080/g" /opt/bitnami/apache/conf/bitnami/bitnami.conf
+sed -i "s/80/8080/g" /opt/bitnami/apache/conf/vhosts/httpd-vhosts.conf
+sed -i "s/443/8443/g"  /opt/bitnami/apache/conf/vhosts/drupal-https-vhost.conf
+sed -i "s/443/8443/g" /opt/bitnami/apache/conf/bitnami
+/app-entrypoint.sh nami start --foreground apache
+/opt/bitnami/apache/conf
